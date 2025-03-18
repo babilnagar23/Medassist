@@ -1,0 +1,494 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Health Care Center</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"rel="stylesheet"/>
+    <link rel="stylesheet" href="/static/index.css">
+    <link rel="stylesheet" href="/static/navbar.css">
+    <link rel="stylesheet" href="/static/footer.css">
+    <link rel="stylesheet" href="/static/about.css">
+    <link rel="stylesheet" href="/static/contact.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+  </head>
+
+  <style>
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            color: black;
+            margin-top: 0;
+            margin-left: 2px;
+        }
+
+        .myimg {
+            width: 50px;
+            height: 50px;
+            border: 2px solid black;
+            border-radius: 25px;
+        }
+
+
+
+
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container">
+          <!-- Logo Section -->
+          <div class="logo">
+            <img class="myimg" src="./static/img.png" alt="Health Center Logo">
+           
+          </div>
+      
+          <!-- Navigation Links -->
+          <ul class="nav-links">
+            <li>
+              <a href="" class="nav-link">
+                <i class="fas fa-home"></i> Home
+              </a>
+            </li>
+            <li>
+              <a href="./about.html" class="nav-link">
+                <i class="fas fa-info-circle"></i> About
+              </a>
+            </li>
+            <li>
+              <a href="./contact.html" class="nav-link">
+                <i class="fas fa-phone"></i> Contact
+              </a>
+            </li>
+            <li>
+              <!--<a href="./diseases.html" class="nav-link">
+                <i class="fas fa-stethoscope"></i> Diseases
+              </a>
+            </li>-->
+            <li>
+              <a href="./signin.html" class="nav-link">
+                <i class="fas fa-sign-in-alt"></i> Sign-in
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+
+
+
+
+
+<div class="slideshow-container">
+    <div class="text-overlay">Know your&nbsp;<span style="color: #55a5ea;">Meds!</span></div>
+    <div class="mySlides fade">
+        <img src="/static/pill1.jpg" style="width:100%"class="blurred-img">
+        
+    </div>
+    
+    <div class="mySlides fade">
+        <img src="/static/pill2.jpg" style="width:100%"class="blurred-img">
+    </div>
+    <div class="mySlides fade">
+        <img src="/static/pill3.jpg" style="width:100%"class="blurred-img">
+    </div>
+    <div class="mySlides fade">
+        <img src="/static/pill4.jpg" style="width:100%"class="blurred-img">
+    </div>
+    
+    
+</div>
+
+<script>
+    let slideIndex = 0;
+    showSlides();
+
+    function showSlides() {
+        let i;
+        let slides = document.getElementsByClassName("mySlides");
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        slideIndex++;
+        if (slideIndex > slides.length) {slideIndex = 1}
+        slides[slideIndex - 1].style.display = "block";
+        setTimeout(showSlides, 4000); 
+    }
+</script>
+
+<section class="idk">
+    <div class="header">Med<span style="color: #55a5ea;">Assist</span>
+    
+
+    </div>
+    <div class="hero-container">
+       
+        <div class="hero-text">
+            <p>
+                MedAssist is an intelligent health companion that provides personalized medicine recommendations and related health insights. By simply entering your symptoms, MedAssist helps you discover potential causes, suggests treatments, and offers useful tips to manage your condition effectively.
+                
+            </p>
+        </div>
+    </div>
+        <div class="form-container">
+            <form action="/predict" method="post">
+                <div class="form-group">
+                    <label for="symptoms" class="form-label">Enter your symptoms</label>
+                    <input type="text" id="symptoms" name="symptoms" placeholder="Type symptoms such as itching, sleeping, aching, etc" class="form-input">
+                    <button type="submit" class="submit-btn">Predict</button>
+                </div>
+    
+                {% if message %}
+                <p class="message">{{ message }}</p>
+                {% endif %}
+    
+                
+            </form>
+        </div>
+
+</section>
+  
+   
+
+
+
+
+
+
+
+
+
+
+{% if predicted_disease %}
+
+<!-- Results -->
+<h1 class="result-heading">Check Your Results Here</h1>
+
+<div class="modal-container">
+    <div class="result-container">
+        <!-- Buttons to toggle display -->
+        <button class="toggle-button" data-bs-toggle="modal" data-bs-target="#diseaseModal">Disease</button>
+        <button class="toggle-button" data-bs-toggle="modal" data-bs-target="#descriptionModal">Description</button>
+        <button class="toggle-button" data-bs-toggle="modal" data-bs-target="#precautionModal">Precaution</button>
+        <button class="toggle-button" data-bs-toggle="modal" data-bs-target="#medicationsModal">Medications</button>
+        <button class="toggle-button" data-bs-toggle="modal" data-bs-target="#workoutsModal">Workouts</button>
+        <button class="toggle-button" data-bs-toggle="modal" data-bs-target="#dietsModal">Diets</button>
+    </div>
+</div>
+
+
+{% endif %}
+
+<!-- Disease Modal -->
+    <div class="modal fade" id="diseaseModal" tabindex="-1" aria-labelledby="diseaseModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #59bcbf51; color:white;"> 
+                    <h5 class="modal-title" id="diseaseModalLabel">Predicted Disease</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" > 
+                    <p>{{ predicted_disease }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Description Modal -->
+    <div class="modal fade" id="descriptionModal" tabindex="-1" aria-labelledby="descriptionModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #59bcbf51; color:white;">
+                    <h5 class="modal-title" id="descriptionModalLabel">Description</h5>
+                    <button type="button" class="btn-close" style="margin-left:450px; margin-top: 10px;"data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>{{ dis_des }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!-- Precaution Modal -->
+    <div class="modal fade" id="precautionModal" tabindex="-1" aria-labelledby="precautionModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #59bcbf51; color:white;">
+                    <h5 class="modal-title" id="precautionModalLabel">Precaution</h5>
+                    <button type="button" class="btn-close" style="margin-left:450px; margin-top: 10px;"data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul>
+                        {% for i in my_precautions %}
+                            <li>{{ i }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!-- Medications Modal -->
+    <div class="modal fade" id="medicationsModal" tabindex="-1" aria-labelledby="medicationsModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #59bcbf51; color:white;">
+                    <h5 class="modal-title" id="medicationsModalLabel">Medications</h5>
+                    <button type="button" class="btn-close" style="margin-left:450px; margin-top: 10px;"data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul>
+                        {% for i in medications %}
+                            <li>{{ i }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Workouts Modal -->
+    <div class="modal fade" id="workoutsModal" tabindex="-1" aria-labelledby="workoutsModalLabel" aria-hidden="true">
+        <div class="modal-dialog" >
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #59bcbf51; color:white;">
+                    <h5 class="modal-title" id="workoutsModalLabel">Workouts</h5>
+                    <button type="button" class="btn-close"style="margin-left:450px; margin-top: 10px;" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul>
+                        {% for i in workout %}
+                            <li>{{ i }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Diets Modal -->
+    <div class="modal fade" id="dietsModal" tabindex="-1" aria-labelledby="dietsModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #59bcbf51; color:white;">
+                    <h5 class="modal-title" id="dietsModalLabel">Diets</h5>
+                    <button type="button" class="btn-close"style="margin-left:450px; margin-top: 10px;" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul>
+                        {% for i in my_diet %}
+                            <li>{{ i }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br><br><br>
+    <header class="about-header">
+        <h1>About <span class ="highlight2">Med<span class="highlight">Assist</span></h1>
+    </header>
+    
+    <section class="about-us-section">
+      <div class="content">
+        <div class="content-container">
+            <div class="text">
+                <h2>Who We Are</h2>
+                <p>
+                    At  <span class ="highlight3">Med</span><span class="highlight">Assist</span>, we believe in harnessing the power of technology to make healthcare accessible and personalized for everyone. 
+                    Our platform is designed to assist users in identifying potential illnesses, offering preventative measures, and suggesting simple dietary tips based on their symptoms.
+                </p>
+            </div>
+            <div class="image">
+                <img src="static/about.png" alt="Who We Are">
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="features">
+      <h2>What We Offer</h2>
+      <div class="feature-container">
+          <div class="text">
+              <h3>Predictive Analysis</h3>
+              <p>Enter your symptoms, and MedAssist predicts possible diseases using an intelligent machine learning model.</p>
+          </div>
+          <div class="image">
+              <img src="static/pred.jpg" alt="Predictive Analysis">
+          </div>
+      </div>
+      <div class="feature-container">
+          <div class="image">
+              <img src="static/preca.jpg" alt="Precautionary Measures">
+          </div>
+          <div class="text">
+              <h3>Precautionary Measures</h3>
+              <p>Receive actionable tips to prevent the escalation of your condition.</p>
+          </div>
+      </div>
+      <div class="feature-container">
+          <div class="text">
+              <h3>Diet Recommendations</h3>
+              <p>Gain insights into a simple, health-focused diet tailored to your needs.</p>
+          </div>
+          <div class="image">
+              <img src="static/diet.jpg" alt="Diet Recommendations">
+          </div>
+      </div>
+      <div class="feature-container">
+          <div class="image">
+              <img src="static/edu.webp" alt="Health Education">
+          </div>
+          <div class="text">
+              <h3>Health Education</h3>
+              <p>Understand the predicted disease with detailed descriptions and related health insights.</p>
+          </div>
+      </div>
+  </div>
+  
+
+  <div class="mission-container">
+    <div class="mission">
+        <div class="text">
+            <h2>Our Mission</h2>
+            <p>
+                Our mission is to empower individuals with knowledge about their health and provide personalized guidance for a better quality of life.
+                Whether it's understanding a disease, managing symptoms, or making healthier lifestyle choices, MedAssist is your trusted companion.
+            </p>
+        </div>
+        <div class="image">
+            <img src="static/mission.jpg" alt="Our Mission">
+        </div>
+    </div>
+</div>
+
+    </section>
+    <section class="contact-us">
+        <div class="contact-header">
+            <h2>Contact Us</h2>
+            <p>We'd love to hear from you! Reach out to us with any questions, feedback, or inquiries.</p>
+        </div>
+    
+        <div class="contact-content">
+            <div class="contact-info">
+                <h3>Our Address</h3>
+                <i class="fas fa-map-marker-alt"></i>
+                <p>MedAssist Headquarters</p>
+                <p>VIT Bhopal University</p>
+                <p>Bhopal, India, 466116</p>
+                
+                <h3>Phone</h3>
+                <i class="fas fa-phone-alt"></i>
+                <p>+123 456 7890</p>
+                
+                <h3>Email</h3>
+                <i class="fas fa-envelope"></i>
+                <p>support@medassist.com</p>
+    
+                
+            </div>
+    
+            <div class="contact-form">
+                <h3>Get in Touch</h3>
+                <form id="contact-form" action="/submit-form" method="POST">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name" required placeholder="Enter your full name">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" required placeholder="Enter your email address">
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Your Message</label>
+                        <textarea id="message" name="message" required placeholder="Write your message here..."></textarea>
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
+    
+        <div class="map">
+            <h3>Find Us Here</h3>
+            <iframe src="https://www.google.com/maps/embed?pb=YOUR_GOOGLE_MAP_URL" width="100%" height="400" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+        </div>
+    </section>
+    
+    <footer class="site-footer" style="background-color: #194548;">
+        <div class="footer-inner">
+            <div class="quick-links">
+                <h2>Quick Links</h2>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="./about.html">About Us</a></li>
+                    <li><a href="./diseases.html">Diseases</a></li>
+                    
+                </ul>
+            </div>
+            
+            <div class="legal-info">
+                <h2>Legal</h2>
+                <ul>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Use</a></li>
+                    <li><a href="#">Accessibility</a></li>
+                </ul>
+            </div>
+    
+            <!--  Newsletter Section -->
+            <div class="newsletter">
+                <h2>Newsletter</h2>
+                <p>Subscribe to our newsletter for the latest updates and offers.</p>
+                <form id="newsletter-form">
+                    <input type="email" id="email" placeholder="Enter your email" name="email" required>
+                    
+                </form>
+                <p id="subscription-message" style="color: rgb(255, 255, 255); font-weight: bold; display: none;">Subscribed successfully!</p>
+            </div>
+        </div>
+        
+        
+        
+        <div class="copyright" style="background-color: #55a5ea;">
+            <ul>
+                <a href="#"><i class="fa-brands fa-facebook" style="padding: 10px;font-size: 23px;color: rgba(218, 223, 223, 0.725);"></i></a>
+                <a href="#"><i class="fa-brands fa-twitter" style="padding: 10px;font-size: 23px;color: rgba(218, 223, 223, 0.725);"></i></a>
+                <a href="#"><i class="fa-brands fa-linkedin" style="padding: 10px;font-size: 23px;color: rgba(218, 223, 223, 0.725);"></i></a>
+                <a href="#"><i class="fa-brands fa-instagram" style="padding: 10px;font-size: 23px;color: rgba(218, 223, 223, 0.725);"></i></a>
+            </ul>
+            <p>&copy; 2024 MedAssist. All rights reserved.</p>
+        </div>
+        
+    </footer>
+    <script>
+       document.getElementById("email").addEventListener("keydown", function(event) {
+    
+    if (event.key === "Enter") {
+        const email = document.getElementById("email").value;
+
+        if (email) {
+           
+            document.getElementById("subscription-message").style.display = "block";
+            
+            document.getElementById("email").value = "";
+        } else {
+            
+            alert("Please enter a valid email address.");
+        }
+    }
+});
+
+
+    </script>
+ 
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+</body>
+
+</html>

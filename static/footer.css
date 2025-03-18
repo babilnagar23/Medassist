@@ -1,0 +1,109 @@
+.site-footer {
+    background-color: #ffeeee;
+    color: #fff;
+    }
+    
+    .footer-inner {
+    max-width: 1200px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    }
+    
+    .quick-links, .legal-info, .newsletter {
+    flex: 1 1 30%; 
+    text-align: center;
+    margin: 10px;
+    }
+    
+    .quick-links h2, .legal-info h2, .newsletter h2 {
+    font-size: 1.5em;
+    }
+    
+    .quick-links ul, .legal-info ul {
+    list-style-type: none;
+    padding: 0;
+    }
+    
+    .quick-links ul li, .legal-info ul li {
+    margin-bottom: 8px;
+    }
+    
+    .quick-links a, .legal-info a, .newsletter a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    }
+    
+    .quick-links a:hover, .legal-info a:hover, .newsletter a:hover {
+    color: #f0f0f0;
+    text-decoration: none;
+    color: #003f7f;
+    }
+    
+    .newsletter {
+    text-align: center;
+    }
+    
+    .newsletter h2 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    }
+    
+    .newsletter p {
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 15px;
+    }
+    
+    #newsletter-form {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .newsletter input[type="email"] {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    }
+    
+    
+    .newsletter input[type="email"]:focus {
+    border: 2px solid #55a5ea;
+    }
+    #subscription-message {
+    margin-top: 10px;
+    color: white;
+    }
+    
+    .copyright {
+    text-align: center;
+    color: #ffffff;
+    font-size: 1em;
+    margin-top: 60px;
+    
+    }
+    
+    .copyright ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    }
+    
+    .copyright ul a {
+    text-decoration: none;
+    }
+    .copyright a i:hover {
+    transform: scale(0.8); 
+    
+    }
+    
+    
+    .copyright a i {
+    transition: transform 0.3s ease, color 0.3s ease;
+    }
