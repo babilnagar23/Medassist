@@ -1,0 +1,429 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Health Conditions Directory — MedAssist</title>
+  
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='img.png') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+</head>
+
+<body class="ma-body">
+
+  <!-- ======================================================================
+       NAVIGATION BAR
+       ====================================================================== -->
+  <header class="ma-navbar" id="mainNavbar">
+    <div class="ma-container ma-navbar-container">
+      <a href="/" class="ma-brand" aria-label="MedAssist Home">
+        <img class="ma-brand-logo" src="{{ url_for('static', filename='img.png') }}" alt="MedAssist Logo">
+        <span class="ma-brand-text">Med<span>Assist</span></span>
+      </a>
+
+      <button class="ma-nav-toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <i class="fas fa-bars"></i>
+      </button>
+
+      <ul class="ma-nav-links" id="navLinks">
+        <li class="ma-nav-item">
+          <a href="/" class="ma-nav-link">
+            <i class="fas fa-home"></i> Home
+          </a>
+        </li>
+        <li class="ma-nav-item">
+          <a href="/#symptom-checker" class="ma-nav-link">
+            <i class="fas fa-stethoscope"></i> Symptom Checker
+          </a>
+        </li>
+        <li class="ma-nav-item">
+          <a href="/diseases.html" class="ma-nav-link active">
+            <i class="fas fa-book-medical"></i> Explore Conditions
+          </a>
+        </li>
+        <li class="ma-nav-item">
+          <a href="/about.html" class="ma-nav-link">
+            <i class="fas fa-info-circle"></i> About
+          </a>
+        </li>
+        <li class="ma-nav-item">
+          <a href="/contact.html" class="ma-nav-link">
+            <i class="fas fa-envelope"></i> Contact
+          </a>
+        </li>
+        <li class="ma-nav-item ma-nav-cta">
+          <a href="/signin.html" class="ma-btn ma-btn-primary ma-btn-sm">
+            <i class="fas fa-sign-in-alt"></i> Sign In
+          </a>
+        </li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- ======================================================================
+       DIRECTORY HERO
+       ====================================================================== -->
+  <section class="ma-section ma-hero" style="padding-top: 40px; padding-bottom: 40px;">
+    <div class="ma-container" style="text-align: center; max-width: 780px;">
+      <span class="ma-eyebrow">Medical Knowledge Base</span>
+      <h1 class="ma-hero-heading" style="font-size: 2.5rem; margin-bottom: 14px;">Clinical Conditions Directory</h1>
+      <p class="ma-hero-lead" style="margin-bottom: 24px;">
+        Explore all 41 health conditions cataloged in the MedAssist database. Search illnesses, view standard precautions, read clinical descriptions, and discover dietary & lifestyle tips.
+      </p>
+      <a href="/#symptom-checker" class="ma-btn ma-btn-primary">
+        <i class="fas fa-stethoscope"></i> Check Your Symptoms
+      </a>
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       SEARCH & EXPLORER SECTION
+       ====================================================================== -->
+  <section class="ma-section ma-explorer-section" style="padding-top: 20px;">
+    <div class="ma-container">
+      
+      <div class="ma-explorer-controls">
+        <div class="ma-explorer-search-box">
+          <i class="fas fa-search ma-search-icon"></i>
+          <input 
+            type="text" 
+            id="conditionSearchInput" 
+            class="ma-explorer-input" 
+            placeholder="Search illnesses, diseases or descriptions (e.g. malaria, asthma, allergy, ulcer)..."
+            aria-label="Search conditions"
+          >
+          <button type="button" class="ma-search-clear" id="conditionSearchClear" aria-label="Clear condition search">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+
+        <div class="ma-alphabet-filter" id="alphabetFilter">
+          <button type="button" class="ma-letter-btn all-btn active" data-letter="ALL">All</button>
+        </div>
+
+        <div class="ma-explorer-status">
+          <span id="conditionCountText">Showing {{ conditions_catalog|length }} conditions</span>
+          <span style="font-size: 0.82rem; color: var(--ma-text-muted);">Click "View Details" to see full clinical guidance</span>
+        </div>
+      </div>
+
+      <!-- Conditions Grid -->
+      <div class="ma-conditions-grid" id="conditionsGrid">
+        {% for c in conditions_catalog %}
+          <div class="ma-condition-card" data-name="{{ c.name|lower }}" data-desc="{{ c.description|lower }}" data-letter="{{ c.first_letter }}">
+            <div class="ma-condition-card-header">
+              <h3 class="ma-condition-card-title">{{ c.name }}</h3>
+              <span class="ma-condition-letter-tag">{{ c.first_letter }}</span>
+            </div>
+            
+            <p class="ma-condition-card-desc">{{ c.description }}</p>
+
+            <div class="ma-condition-card-footer">
+              <span style="font-size: 0.78rem; color: var(--ma-text-muted); font-weight: 500;">
+                <i class="fas fa-shield-alt" style="color: var(--ma-secondary);"></i> {{ c.precautions|length }} Precautions
+              </span>
+              <button 
+                type="button" 
+                class="ma-condition-view-btn" 
+                data-condition-id="{{ c.id }}"
+                aria-label="View details for {{ c.name }}"
+              >
+                View Details <i class="fas fa-arrow-right"></i>
+              </button>
+            </div>
+          </div>
+        {% endfor %}
+
+        <div class="ma-explorer-empty" id="explorerEmptyState">
+          <i class="fas fa-search"></i>
+          <h3>No matching conditions found</h3>
+          <p>Try searching for a different keyword or click "All" above to reset the filter.</p>
+          <button type="button" class="ma-btn ma-btn-secondary ma-btn-sm" id="resetConditionFilterBtn">
+            Reset Filters
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       MODAL FOR DETAILS
+       ====================================================================== -->
+  <div class="ma-modal-backdrop" id="conditionModalBackdrop" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="ma-modal-dialog">
+      <div class="ma-modal-header">
+        <h3 class="ma-modal-title" id="modalConditionTitle">Condition Details</h3>
+        <button type="button" class="ma-modal-close" id="modalCloseBtn" aria-label="Close modal">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      
+      <div class="ma-modal-body">
+        
+        <div class="ma-modal-section">
+          <div class="ma-modal-section-title">
+            <i class="fas fa-file-medical-alt"></i> Description
+          </div>
+          <p id="modalConditionDesc" style="color: var(--ma-text); line-height: 1.6;"></p>
+        </div>
+
+        <div class="ma-modal-section">
+          <div class="ma-modal-section-title">
+            <i class="fas fa-shield-virus"></i> Standard Precautions
+          </div>
+          <ul class="ma-checklist" id="modalPrecautionsList"></ul>
+        </div>
+
+        <div class="ma-modal-section">
+          <div class="ma-modal-section-title">
+            <i class="fas fa-pills"></i> Educational Medication Reference
+          </div>
+          <div class="ma-meds-grid" id="modalMedsGrid"></div>
+          <div style="font-size: 0.78rem; color: var(--ma-text-muted); margin-top: 8px;">
+            <i class="fas fa-info-circle"></i> Reference only. Consult a physician before medication use.
+          </div>
+        </div>
+
+        <div class="ma-modal-section">
+          <div class="ma-modal-section-title">
+            <i class="fas fa-apple-alt"></i> Dietary Guidance
+          </div>
+          <ul class="ma-checklist" id="modalDietList"></ul>
+        </div>
+
+        <div class="ma-modal-section">
+          <div class="ma-modal-section-title">
+            <i class="fas fa-heartbeat"></i> Lifestyle & Wellness
+          </div>
+          <ul class="ma-checklist" id="modalWorkoutList"></ul>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================================
+       FOOTER
+       ====================================================================== -->
+  <footer class="ma-footer">
+    <div class="ma-container">
+      <div class="ma-footer-grid">
+        <div class="ma-footer-brand">
+          <a href="/" class="ma-brand" style="margin-bottom: 12px; display: inline-flex;">
+            <img class="ma-brand-logo" src="{{ url_for('static', filename='img.png') }}" alt="MedAssist Logo">
+            <span class="ma-brand-text" style="color: #FFFFFF;">Med<span style="color: var(--ma-blue);">Assist</span></span>
+          </a>
+          <p>
+            An intelligent symptom-exploration and healthcare knowledge platform designed to provide accessible medical information powered by machine learning.
+          </p>
+        </div>
+
+        <div class="ma-footer-col">
+          <h4>Navigation</h4>
+          <ul class="ma-footer-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/#symptom-checker">Symptom Checker</a></li>
+            <li><a href="/diseases.html">Condition Directory</a></li>
+            <li><a href="/#how-it-works">How It Works</a></li>
+          </ul>
+        </div>
+
+        <div class="ma-footer-col">
+          <h4>Resources</h4>
+          <ul class="ma-footer-links">
+            <li><a href="/about.html">About MedAssist</a></li>
+            <li><a href="/contact.html">Contact Us</a></li>
+            <li><a href="/signin.html">Account Sign-in</a></li>
+          </ul>
+        </div>
+
+        <div class="ma-footer-col">
+          <h4>Legal & Safety</h4>
+          <p style="font-size: 0.85rem; color: #94A3B8; line-height: 1.6;">
+            MedAssist is not an emergency triage tool. In case of urgent medical necessity, contact medical emergency services immediately.
+          </p>
+        </div>
+      </div>
+
+      <div class="ma-footer-bottom">
+        <div>&copy; 2026 MedAssist Healthcare Systems. All rights reserved.</div>
+        <div style="display: flex; gap: 20px;">
+          <span>Educational Use Only</span>
+          <span>Privacy Conscious</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    window.MEDASSIST_CONDITIONS = {{ conditions_catalog|tojson }};
+  </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Mobile Nav
+      const navToggle = document.getElementById('navToggle');
+      const navLinks = document.getElementById('navLinks');
+      if (navToggle && navLinks) {
+        navToggle.addEventListener('click', function() {
+          const isOpen = navLinks.classList.toggle('open');
+          navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+          navToggle.innerHTML = isOpen ? '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+        });
+      }
+
+      // Condition Explorer Controller
+      const conditionSearchInput = document.getElementById('conditionSearchInput');
+      const conditionSearchClear = document.getElementById('conditionSearchClear');
+      const alphabetFilter = document.getElementById('alphabetFilter');
+      const conditionsGrid = document.getElementById('conditionsGrid');
+      const conditionCards = conditionsGrid.querySelectorAll('.ma-condition-card');
+      const countText = document.getElementById('conditionCountText');
+      const emptyState = document.getElementById('explorerEmptyState');
+      const resetFilterBtn = document.getElementById('resetConditionFilterBtn');
+
+      let currentLetter = 'ALL';
+      let currentQuery = '';
+
+      const uniqueLetters = new Set();
+      conditionCards.forEach(card => {
+        const l = card.getAttribute('data-letter');
+        if (l) uniqueLetters.add(l.toUpperCase());
+      });
+
+      const sortedLetters = Array.from(uniqueLetters).sort();
+      sortedLetters.forEach(letter => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'ma-letter-btn';
+        btn.textContent = letter;
+        btn.setAttribute('data-letter', letter);
+        alphabetFilter.appendChild(btn);
+      });
+
+      function filterConditions() {
+        let visibleCount = 0;
+        const q = currentQuery.trim().toLowerCase();
+
+        conditionCards.forEach(card => {
+          const name = card.getAttribute('data-name') || '';
+          const desc = card.getAttribute('data-desc') || '';
+          const letter = card.getAttribute('data-letter') || '';
+
+          const matchesLetter = (currentLetter === 'ALL' || letter.toUpperCase() === currentLetter);
+          const matchesQuery = (!q || name.includes(q) || desc.includes(q));
+
+          if (matchesLetter && matchesQuery) {
+            card.style.display = 'flex';
+            visibleCount++;
+          } else {
+            card.style.display = 'none';
+          }
+        });
+
+        countText.textContent = `Showing ${visibleCount} of ${conditionCards.length} conditions`;
+        emptyState.style.display = visibleCount === 0 ? 'block' : 'none';
+      }
+
+      alphabetFilter.addEventListener('click', (e) => {
+        const btn = e.target.closest('.ma-letter-btn');
+        if (!btn) return;
+        alphabetFilter.querySelectorAll('.ma-letter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentLetter = btn.getAttribute('data-letter') || 'ALL';
+        filterConditions();
+      });
+
+      conditionSearchInput.addEventListener('input', (e) => {
+        currentQuery = e.target.value;
+        conditionSearchClear.style.display = currentQuery.trim() ? 'block' : 'none';
+        filterConditions();
+      });
+
+      conditionSearchClear.addEventListener('click', () => {
+        conditionSearchInput.value = '';
+        currentQuery = '';
+        conditionSearchClear.style.display = 'none';
+        filterConditions();
+        conditionSearchInput.focus();
+      });
+
+      if (resetFilterBtn) {
+        resetFilterBtn.addEventListener('click', () => {
+          conditionSearchInput.value = '';
+          currentQuery = '';
+          conditionSearchClear.style.display = 'none';
+          currentLetter = 'ALL';
+          alphabetFilter.querySelectorAll('.ma-letter-btn').forEach(b => {
+            b.classList.toggle('active', b.getAttribute('data-letter') === 'ALL');
+          });
+          filterConditions();
+        });
+      }
+
+      // Modal Controller
+      const modalBackdrop = document.getElementById('conditionModalBackdrop');
+      const modalCloseBtn = document.getElementById('modalCloseBtn');
+      const modalTitle = document.getElementById('modalConditionTitle');
+      const modalDesc = document.getElementById('modalConditionDesc');
+      const modalPrecautions = document.getElementById('modalPrecautionsList');
+      const modalMeds = document.getElementById('modalMedsGrid');
+      const modalDiet = document.getElementById('modalDietList');
+      const modalWorkout = document.getElementById('modalWorkoutList');
+
+      const conditionsMap = new Map();
+      (window.MEDASSIST_CONDITIONS || []).forEach(c => {
+        conditionsMap.set(String(c.id), c);
+      });
+
+      conditionsGrid.addEventListener('click', (e) => {
+        const btn = e.target.closest('.ma-condition-view-btn');
+        if (!btn) return;
+        const id = btn.getAttribute('data-condition-id');
+        const condition = conditionsMap.get(id);
+        if (!condition) return;
+
+        modalTitle.textContent = condition.name;
+        modalDesc.textContent = condition.description || 'No description available.';
+
+        modalPrecautions.innerHTML = (condition.precautions && condition.precautions.length > 0)
+          ? condition.precautions.map(p => `<li class="ma-checklist-item"><i class="fas fa-check-circle"></i> <span>${escapeHtml(p)}</span></li>`).join('')
+          : '<li style="color: var(--ma-text-muted); font-style: italic;">No specific precautions listed.</li>';
+
+        modalMeds.innerHTML = (condition.medications && condition.medications.length > 0)
+          ? condition.medications.map(m => `<div class="ma-med-item"><i class="fas fa-prescription-bottle-alt"></i> <span>${escapeHtml(m)}</span></div>`).join('')
+          : '<p style="color: var(--ma-text-muted); font-style: italic;">No medication reference listed.</p>';
+
+        modalDiet.innerHTML = (condition.diets && condition.diets.length > 0)
+          ? condition.diets.map(d => `<li class="ma-checklist-item"><i class="fas fa-leaf" style="color: var(--ma-secondary);"></i> <span>${escapeHtml(d)}</span></li>`).join('')
+          : '<li style="color: var(--ma-text-muted); font-style: italic;">Standard hydration and balanced nutrition advised.</li>';
+
+        modalWorkout.innerHTML = (condition.workouts && condition.workouts.length > 0)
+          ? condition.workouts.map(w => `<li class="ma-checklist-item"><i class="fas fa-running" style="color: var(--ma-blue);"></i> <span>${escapeHtml(w)}</span></li>`).join('')
+          : '<li style="color: var(--ma-text-muted); font-style: italic;">Adequate rest advised.</li>';
+
+        modalBackdrop.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      });
+
+      function closeConditionModal() {
+        modalBackdrop.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+
+      modalCloseBtn.addEventListener('click', closeConditionModal);
+      modalBackdrop.addEventListener('click', (e) => { if (e.target === modalBackdrop) closeConditionModal(); });
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeConditionModal(); });
+
+      function escapeHtml(str) {
+        if (!str) return '';
+        const div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
+      }
+    });
+  </script>
+</body>
+</html>

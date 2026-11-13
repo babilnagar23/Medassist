@@ -1,494 +1,1343 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Health Care Center</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"rel="stylesheet"/>
-    <link rel="stylesheet" href="/static/index.css">
-    <link rel="stylesheet" href="/static/navbar.css">
-    <link rel="stylesheet" href="/static/footer.css">
-    <link rel="stylesheet" href="/static/about.css">
-    <link rel="stylesheet" href="/static/contact.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-  </head>
-
-  <style>
-
-        .logo {
-            width: 50px;
-            height: 50px;
-            color: black;
-            margin-top: 0;
-            margin-left: 2px;
-        }
-
-        .myimg {
-            width: 50px;
-            height: 50px;
-            border: 2px solid black;
-            border-radius: 25px;
-        }
-
-
-
-
-    </style>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MedAssist — Intelligent Healthcare & Symptom Explorer</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='img.png') }}">
+  
+  <!-- Font Awesome 6 Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Modern Clean Stylesheet -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
 </head>
-<body>
-    <!-- Navbar -->
-    <nav class="navbar">
-        <div class="container">
-          <!-- Logo Section -->
-          <div class="logo">
-            <img class="myimg" src="./static/img.png" alt="Health Center Logo">
-           
+
+<body class="ma-body" id="top">
+
+  <!-- ======================================================================
+       NAVIGATION BAR
+       ====================================================================== -->
+  <header class="ma-navbar" id="mainNavbar">
+    <div class="ma-container ma-navbar-container">
+      <a href="/" class="ma-brand" aria-label="MedAssist Home">
+        <img class="ma-brand-logo" src="{{ url_for('static', filename='img.png') }}" alt="MedAssist Logo">
+        <span class="ma-brand-text">Med<span>Assist</span></span>
+      </a>
+
+      <!-- Mobile Hamburger Toggle -->
+      <button class="ma-nav-toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <i class="fas fa-bars"></i>
+      </button>
+
+      <!-- Navigation Links -->
+      <ul class="ma-nav-links" id="navLinks">
+        <li class="ma-nav-item">
+          <a href="/" class="ma-nav-link active">
+            <i class="fas fa-home"></i> Home
+          </a>
+        </li>
+        <li class="ma-nav-item">
+          <a href="#symptom-checker" class="ma-nav-link">
+            <i class="fas fa-stethoscope"></i> Symptom Checker
+          </a>
+        </li>
+        <li class="ma-nav-item">
+          <a href="#explore-conditions" class="ma-nav-link">
+            <i class="fas fa-book-medical"></i> Explore Conditions
+          </a>
+        </li>
+        <li class="ma-nav-item">
+          <a href="/about.html" class="ma-nav-link">
+            <i class="fas fa-info-circle"></i> About
+          </a>
+        </li>
+        <li class="ma-nav-item">
+          <a href="/contact.html" class="ma-nav-link">
+            <i class="fas fa-envelope"></i> Contact
+          </a>
+        </li>
+        <li class="ma-nav-item ma-nav-cta">
+          <a href="/signin.html" class="ma-btn ma-btn-primary ma-btn-sm">
+            <i class="fas fa-sign-in-alt"></i> Sign In
+          </a>
+        </li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- ======================================================================
+       HERO SECTION
+       ====================================================================== -->
+  <section class="ma-hero">
+    <div class="ma-container">
+      <div class="ma-hero-grid">
+        
+        <!-- Left Column: Content -->
+        <div class="ma-hero-content">
+          <div class="ma-eyebrow">YOUR HEALTH, BETTER UNDERSTOOD</div>
+          <h1 class="ma-hero-heading">Understand Your Symptoms. Explore Your Health.</h1>
+          <p class="ma-hero-lead">
+            MedAssist helps you explore health information, understand possible conditions, and discover useful wellness insights through an intelligent, easy-to-use symptom checker.
+          </p>
+
+          <div class="ma-hero-actions">
+            <a href="#symptom-checker" class="ma-btn ma-btn-primary ma-btn-lg">
+              <i class="fas fa-stethoscope"></i> Check Symptoms
+            </a>
+            <a href="#explore-conditions" class="ma-btn ma-btn-secondary ma-btn-lg">
+              <i class="fas fa-search"></i> Explore Conditions
+            </a>
           </div>
+
+          <div class="ma-hero-disclaimer">
+            <i class="fas fa-shield-alt"></i>
+            <span>Educational information only &bull; Not a substitute for professional medical care</span>
+          </div>
+        </div>
+
+        <!-- Right Column: Visual Container -->
+        <div class="ma-hero-visual">
+          <div class="ma-hero-image-wrapper">
+            <img src="{{ url_for('static', filename='labsc.jpg') }}" alt="Medical Laboratory Research" class="ma-hero-image">
+          </div>
+
+          <!-- Floating Info Cards -->
+          <div class="ma-hero-float-card top-right">
+            <div class="ma-float-icon">
+              <i class="fas fa-notes-medical"></i>
+            </div>
+            <div>
+              <p class="ma-float-title">132 Symptoms</p>
+              <p class="ma-float-subtitle">Clinical Indicators</p>
+            </div>
+          </div>
+
+          <div class="ma-hero-float-card bottom-left">
+            <div class="ma-float-icon">
+              <i class="fas fa-heartbeat"></i>
+            </div>
+            <div>
+              <p class="ma-float-title">41 Health Conditions</p>
+              <p class="ma-float-subtitle">Structured Dataset</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       TWO PRIMARY FUNCTIONAL CARDS
+       ====================================================================== -->
+  <section class="ma-features-section">
+    <div class="ma-container">
+      <div class="ma-features-grid">
+        
+        <!-- Card A: Symptom Checker -->
+        <div class="ma-feature-card">
+          <div class="ma-feature-icon-wrapper">
+            <i class="fas fa-stethoscope"></i>
+          </div>
+          <h2 class="ma-feature-title">Symptom Checker</h2>
+          <p class="ma-feature-desc">
+            Select your active symptoms from our clinical indicator database. Our machine-learning classification model analyzes the pattern to highlight potential conditions.
+          </p>
+          <a href="#symptom-checker" class="ma-btn ma-btn-primary ma-feature-btn">
+            Start Checking <i class="fas fa-arrow-down"></i>
+          </a>
+        </div>
+
+        <!-- Card B: Condition Explorer -->
+        <div class="ma-feature-card">
+          <div class="ma-feature-icon-wrapper">
+            <i class="fas fa-book-medical"></i>
+          </div>
+          <h2 class="ma-feature-title">Explore Health Conditions</h2>
+          <p class="ma-feature-desc">
+            Browse all 41 conditions covered by the MedAssist dataset. Search descriptions, standard precautions, dietary recommendations, and wellness workouts.
+          </p>
+          <a href="#explore-conditions" class="ma-btn ma-btn-secondary ma-feature-btn">
+            Explore Conditions <i class="fas fa-arrow-down"></i>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       INTERACTIVE SYMPTOM SEARCH & CHECKER SYSTEM
+       ====================================================================== -->
+  <section class="ma-section ma-checker-section" id="symptom-checker">
+    <div class="ma-container ma-container-narrow">
       
-          <!-- Navigation Links -->
-          <ul class="nav-links">
-            <li>
-              <a href="" class="nav-link">
-                <i class="fas fa-home"></i> Home
-              </a>
-            </li>
-            <li>
-              <a href="./about.html" class="nav-link">
-                <i class="fas fa-info-circle"></i> About
-              </a>
-            </li>
-            <li>
-              <a href="./contact.html" class="nav-link">
-                <i class="fas fa-phone"></i> Contact
-              </a>
-            </li>
-            <li>
-              <!--<a href="./diseases.html" class="nav-link">
-                <i class="fas fa-stethoscope"></i> Diseases
-              </a>
-            </li>-->
-            <li>
-              <a href="./signin.html" class="nav-link">
-                <i class="fas fa-sign-in-alt"></i> Sign-in
-              </a>
-            </li>
+      <div class="ma-section-header">
+        <span class="ma-eyebrow">Interactive Symptom Analysis</span>
+        <h2 class="ma-section-title">What symptoms are you experiencing?</h2>
+        <p class="ma-section-subtitle">
+          Search for symptoms and select all that apply. Choose from 132 recognized medical indicators in our clinical database.
+        </p>
+      </div>
+
+      <div class="ma-checker-card">
+        
+        <!-- Form for Flask /predict POST route -->
+        <form action="/predict#results" method="post" id="predictionForm">
+          
+          <!-- Canonical Hidden Field submitted to Flask request.form.get('symptoms') -->
+          <input type="hidden" name="symptoms" id="canonicalSymptomsInput" value="{{ selected_symptoms_string or '' }}">
+
+          <!-- Search & Autocomplete Box -->
+          <div class="ma-search-wrapper">
+            <div class="ma-search-input-box">
+              <i class="fas fa-search ma-search-icon"></i>
+              <input 
+                type="text" 
+                id="symptomSearchInput" 
+                class="ma-symptom-input" 
+                placeholder="Type a symptom (e.g. headache, fever, fatigue, joint pain)..."
+                autocomplete="off"
+                aria-label="Search symptoms"
+                aria-expanded="false"
+                aria-haspopup="listbox"
+              >
+              <button type="button" class="ma-search-clear" id="searchClearBtn" aria-label="Clear input">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+
+            <!-- Autocomplete Suggestions Dropdown -->
+            <div class="ma-autocomplete-dropdown" id="autocompleteDropdown" role="listbox">
+              <!-- Dynamically populated by JavaScript -->
+            </div>
+          </div>
+
+          <!-- Selected Symptoms Chips Area -->
+          <div class="ma-selected-container">
+            <div class="ma-selected-header">
+              <span class="ma-selected-count">
+                Selected Symptoms <span class="ma-count-badge" id="selectedCountBadge">0</span>
+              </span>
+              <button type="button" class="ma-clear-all-btn" id="clearAllBtn" style="display: none;">
+                <i class="fas fa-trash-alt"></i> Clear All
+              </button>
+            </div>
+            
+            <div class="ma-chips-list" id="chipsList">
+              <span class="ma-chip-empty-placeholder" id="emptyPlaceholder">
+                No symptoms selected yet. Search above or click common symptoms below.
+              </span>
+            </div>
+          </div>
+
+          <!-- Quick Select Common Symptoms -->
+          <div class="ma-quick-select">
+            <div class="ma-quick-title">Common Starting Symptoms</div>
+            <div class="ma-quick-pills" id="quickPills">
+              <button type="button" class="ma-quick-pill" data-key="headache">Headache</button>
+              <button type="button" class="ma-quick-pill" data-key="high_fever">High Fever</button>
+              <button type="button" class="ma-quick-pill" data-key="cough">Cough</button>
+              <button type="button" class="ma-quick-pill" data-key="fatigue">Fatigue</button>
+              <button type="button" class="ma-quick-pill" data-key="joint_pain">Joint Pain</button>
+              <button type="button" class="ma-quick-pill" data-key="nausea">Nausea</button>
+              <button type="button" class="ma-quick-pill" data-key="skin_rash">Skin Rash</button>
+              <button type="button" class="ma-quick-pill" data-key="chills">Chills</button>
+              <button type="button" class="ma-quick-pill" data-key="acidity">Acidity</button>
+              <button type="button" class="ma-quick-pill" data-key="breathlessness">Breathlessness</button>
+            </div>
+          </div>
+
+          <!-- Server Validation Alert Message -->
+          {% if message %}
+            <div class="ma-alert {% if message_type == 'error' %}ma-alert-error{% else %}ma-alert-success{% endif %}" role="alert">
+              <i class="fas {% if message_type == 'error' %}fa-exclamation-circle{% else %}fa-check-circle{% endif %}"></i>
+              <span>{{ message }}</span>
+            </div>
+          {% endif %}
+
+          <!-- Client-side Validation Alert Placeholder -->
+          <div class="ma-alert ma-alert-error" id="clientAlert" style="display: none;" role="alert">
+            <i class="fas fa-exclamation-circle"></i>
+            <span id="clientAlertText"></span>
+          </div>
+
+          <!-- Form Actions -->
+          <div class="ma-form-actions">
+            <button type="submit" class="ma-btn ma-btn-primary ma-btn-lg ma-submit-predict" id="predictSubmitBtn">
+              <i class="fas fa-stethoscope"></i> Analyze Symptoms
+            </button>
+            <button type="button" class="ma-btn ma-btn-secondary" id="resetCheckerBtn">
+              Reset
+            </button>
+          </div>
+
+          <div class="ma-hero-disclaimer" style="margin-top: 20px; width: 100%;">
+            <i class="fas fa-info-circle"></i>
+            <span>MedAssist provides model-generated suggestions based on selected symptoms for educational reference only.</span>
+          </div>
+
+        </form>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       INLINE PREDICTION RESULTS DASHBOARD (Phase 8)
+       Shown directly on page without modals when a prediction is made
+       ====================================================================== -->
+  {% if predicted_disease %}
+  <section class="ma-results-section" id="results">
+    <div class="ma-container">
+      
+      <!-- Primary Summary Card -->
+      <div class="ma-result-summary-card">
+        <div class="ma-summary-header">
+          <div>
+            <div class="ma-predicted-tag">
+              <i class="fas fa-notes-medical"></i> Symptom Analysis Result
+            </div>
+            <h2 class="ma-predicted-title">{{ predicted_disease_display }}</h2>
+          </div>
+          
+          <span class="ma-eyebrow" style="margin: 0;">
+            <i class="fas fa-check-circle"></i> ML Classification
+          </span>
+        </div>
+
+        {% if submitted_symptoms %}
+        <div class="ma-submitted-tags-wrapper">
+          <div class="ma-submitted-label">Analyzed Symptoms ({{ submitted_symptoms|length }}):</div>
+          <div class="ma-submitted-chips">
+            {% for s in submitted_symptoms %}
+              <span class="ma-submitted-pill"><i class="fas fa-check"></i> {{ s.label }}</span>
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+
+        <!-- Prominent Safety Notice -->
+        <div class="ma-disclaimer-box">
+          <i class="fas fa-exclamation-triangle"></i>
+          <div>
+            <strong>Important Educational Disclaimer:</strong> MedAssist results are generated by an automated Support Vector Classifier machine-learning model based on historical training data. This is <em>not</em> a medical diagnosis or clinical assessment. If you are experiencing severe, sudden, or life-threatening symptoms, please consult a qualified physician or seek emergency medical care immediately.
+          </div>
+        </div>
+      </div>
+
+      <!-- Results Information Grid -->
+      <div class="ma-results-grid">
+        
+        <!-- Card 1: Description -->
+        <div class="ma-result-card full-width">
+          <div class="ma-card-header">
+            <div class="ma-card-header-icon">
+              <i class="fas fa-file-medical-alt"></i>
+            </div>
+            <h3 class="ma-card-title">Condition Overview</h3>
+            <span class="ma-card-badge">Clinical Description</span>
+          </div>
+          <p style="font-size: 1.05rem; line-height: 1.7; color: var(--ma-text); margin: 0;">
+            {{ dis_des }}
+          </p>
+        </div>
+
+        <!-- Card 2: Precautions -->
+        <div class="ma-result-card">
+          <div class="ma-card-header">
+            <div class="ma-card-header-icon">
+              <i class="fas fa-shield-virus"></i>
+            </div>
+            <h3 class="ma-card-title">Recommended Precautions</h3>
+            <span class="ma-card-badge">Action Steps</span>
+          </div>
+          {% if my_precautions and my_precautions|length > 0 %}
+            <ul class="ma-checklist">
+              {% for p in my_precautions %}
+                <li class="ma-checklist-item">
+                  <i class="fas fa-check-circle"></i>
+                  <span>{{ p }}</span>
+                </li>
+              {% endfor %}
+            </ul>
+          {% else %}
+            <p style="color: var(--ma-text-muted); font-style: italic;">No specific precautions listed for this condition.</p>
+          {% endif %}
+        </div>
+
+        <!-- Card 3: Educational Medication Reference -->
+        <div class="ma-result-card">
+          <div class="ma-card-header">
+            <div class="ma-card-header-icon">
+              <i class="fas fa-pills"></i>
+            </div>
+            <h3 class="ma-card-title">Medication Reference</h3>
+            <span class="ma-card-badge">Reference Only</span>
+          </div>
+          {% if medications and medications|length > 0 %}
+            <div class="ma-meds-grid">
+              {% for m in medications %}
+                <div class="ma-med-item">
+                  <i class="fas fa-prescription-bottle-alt"></i>
+                  <span>{{ m }}</span>
+                </div>
+              {% endfor %}
+            </div>
+          {% else %}
+            <p style="color: var(--ma-text-muted); font-style: italic;">No medication reference listed.</p>
+          {% endif %}
+          <div style="margin-top: 16px; font-size: 0.8rem; color: var(--ma-text-muted);">
+            <i class="fas fa-info-circle"></i> Educational reference only. Never start, stop, or change medications without a doctor's prescription.
+          </div>
+        </div>
+
+        <!-- Card 4: Dietary Guidance -->
+        <div class="ma-result-card">
+          <div class="ma-card-header">
+            <div class="ma-card-header-icon">
+              <i class="fas fa-apple-alt"></i>
+            </div>
+            <h3 class="ma-card-title">Dietary & Nutrition Guidelines</h3>
+            <span class="ma-card-badge">Nutrition</span>
+          </div>
+          {% if my_diet and my_diet|length > 0 %}
+            <ul class="ma-checklist">
+              {% for d in my_diet %}
+                <li class="ma-checklist-item">
+                  <i class="fas fa-leaf" style="color: var(--ma-secondary);"></i>
+                  <span>{{ d }}</span>
+                </li>
+              {% endfor %}
+            </ul>
+          {% else %}
+            <p style="color: var(--ma-text-muted); font-style: italic;">General balanced hydration and nutrition recommended.</p>
+          {% endif %}
+        </div>
+
+        <!-- Card 5: Lifestyle & Workout Tips -->
+        <div class="ma-result-card">
+          <div class="ma-card-header">
+            <div class="ma-card-header-icon">
+              <i class="fas fa-heartbeat"></i>
+            </div>
+            <h3 class="ma-card-title">Lifestyle & Physical Wellness</h3>
+            <span class="ma-card-badge">Wellness</span>
+          </div>
+          {% if workout and workout|length > 0 %}
+            <ul class="ma-checklist">
+              {% for w in workout %}
+                <li class="ma-checklist-item">
+                  <i class="fas fa-running" style="color: var(--ma-blue);"></i>
+                  <span>{{ w }}</span>
+                </li>
+              {% endfor %}
+            </ul>
+          {% else %}
+            <p style="color: var(--ma-text-muted); font-style: italic;">Rest and gentle hydration advised.</p>
+          {% endif %}
+        </div>
+
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="ma-results-actions">
+        <a href="#symptom-checker" class="ma-btn ma-btn-primary ma-btn-lg" id="checkAnotherBtn">
+          <i class="fas fa-redo"></i> Perform Another Check
+        </a>
+        <a href="#explore-conditions" class="ma-btn ma-btn-secondary ma-btn-lg">
+          <i class="fas fa-book-medical"></i> Browse Condition Directory
+        </a>
+      </div>
+
+    </div>
+  </section>
+  {% endif %}
+
+  <!-- ======================================================================
+       SEARCHABLE CONDITION / ILLNESS DIRECTORY (Phase 7)
+       ====================================================================== -->
+  <section class="ma-section ma-explorer-section" id="explore-conditions">
+    <div class="ma-container">
+      
+      <div class="ma-section-header">
+        <span class="ma-eyebrow">Medical Knowledge Directory</span>
+        <h2 class="ma-section-title">Explore Health Conditions</h2>
+        <p class="ma-section-subtitle">
+          Browse the complete catalog of 41 health conditions covered by the MedAssist dataset. Search illnesses, read descriptions, and view clinical guidance.
+        </p>
+      </div>
+
+      <!-- Controls: Search & Alphabet Filter -->
+      <div class="ma-explorer-controls">
+        <div class="ma-explorer-search-box">
+          <i class="fas fa-search ma-search-icon"></i>
+          <input 
+            type="text" 
+            id="conditionSearchInput" 
+            class="ma-explorer-input" 
+            placeholder="Search illnesses, diseases or descriptions (e.g. malaria, asthma, allergy, ulcer)..."
+            aria-label="Search conditions"
+          >
+          <button type="button" class="ma-search-clear" id="conditionSearchClear" aria-label="Clear condition search">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+
+        <!-- A-Z Letter Filter Pills -->
+        <div class="ma-alphabet-filter" id="alphabetFilter">
+          <button type="button" class="ma-letter-btn all-btn active" data-letter="ALL">All</button>
+          <!-- Letter buttons populated dynamically -->
+        </div>
+
+        <div class="ma-explorer-status">
+          <span id="conditionCountText">Showing {{ conditions_catalog|length }} conditions</span>
+          <span style="font-size: 0.82rem; color: var(--ma-text-muted);">Click "View Details" on any condition</span>
+        </div>
+      </div>
+
+      <!-- Condition Cards Grid -->
+      <div class="ma-conditions-grid" id="conditionsGrid">
+        {% for c in conditions_catalog %}
+          <div class="ma-condition-card" data-name="{{ c.name|lower }}" data-desc="{{ c.description|lower }}" data-letter="{{ c.first_letter }}">
+            <div class="ma-condition-card-header">
+              <h3 class="ma-condition-card-title">{{ c.name }}</h3>
+              <span class="ma-condition-letter-tag">{{ c.first_letter }}</span>
+            </div>
+            
+            <p class="ma-condition-card-desc">{{ c.description }}</p>
+
+            <div class="ma-condition-card-footer">
+              <span style="font-size: 0.78rem; color: var(--ma-text-muted); font-weight: 500;">
+                <i class="fas fa-shield-alt" style="color: var(--ma-secondary);"></i> {{ c.precautions|length }} Precautions
+              </span>
+              <button 
+                type="button" 
+                class="ma-condition-view-btn" 
+                data-condition-id="{{ c.id }}"
+                aria-label="View details for {{ c.name }}"
+              >
+                View Details <i class="fas fa-arrow-right"></i>
+              </button>
+            </div>
+          </div>
+        {% endfor %}
+
+        <!-- Empty Search State -->
+        <div class="ma-explorer-empty" id="explorerEmptyState">
+          <i class="fas fa-search"></i>
+          <h3>No matching conditions found</h3>
+          <p>Try searching for a different keyword or click "All" above to reset the filter.</p>
+          <button type="button" class="ma-btn ma-btn-secondary ma-btn-sm" id="resetConditionFilterBtn">
+            Reset Filters
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       HOW MEDASSIST WORKS (Phase 10)
+       ====================================================================== -->
+  <section class="ma-section ma-section-alt" id="how-it-works">
+    <div class="ma-container">
+      
+      <div class="ma-section-header">
+        <span class="ma-eyebrow">Platform Methodology</span>
+        <h2 class="ma-section-title">How MedAssist Works</h2>
+        <p class="ma-section-subtitle">
+          Three structured steps to evaluate symptoms and deliver relevant wellness guidance.
+        </p>
+      </div>
+
+      <div class="ma-steps-grid">
+        
+        <div class="ma-step-card">
+          <div class="ma-step-number">1</div>
+          <div class="ma-step-icon">
+            <i class="fas fa-list-check"></i>
+          </div>
+          <h3 class="ma-step-title">Select Active Symptoms</h3>
+          <p class="ma-step-desc">
+            Choose all symptoms you are experiencing from our clinical indicator database of 132 standardized features.
+          </p>
+        </div>
+
+        <div class="ma-step-card">
+          <div class="ma-step-number">2</div>
+          <div class="ma-step-icon">
+            <i class="fas fa-brain"></i>
+          </div>
+          <h3 class="ma-step-title">Machine Learning Analysis</h3>
+          <p class="ma-step-desc">
+            A trained Support Vector Classifier evaluates multi-symptom patterns against clinical training records to identify possible conditions.
+          </p>
+        </div>
+
+        <div class="ma-step-card">
+          <div class="ma-step-number">3</div>
+          <div class="ma-step-icon">
+            <i class="fas fa-heart-pulse"></i>
+          </div>
+          <h3 class="ma-step-title">Actionable Insights</h3>
+          <p class="ma-step-desc">
+            Receive structured educational information including condition descriptions, precautions, dietary advice, and wellness exercises.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       HEALTHCARE SAFETY & EMERGENCY GUIDANCE (Phase 14)
+       ====================================================================== -->
+  <section class="ma-section" id="safety-notice">
+    <div class="ma-container">
+      
+      <div class="ma-safety-box">
+        <div class="ma-safety-grid">
+          
+          <div class="ma-safety-icon-wrapper">
+            <i class="fas fa-user-md"></i>
+          </div>
+
+          <div>
+            <h3 class="ma-safety-title">Healthcare Information & Safety Transparency</h3>
+            <p class="ma-safety-text">
+              MedAssist is an educational platform designed to help users explore symptoms and discover structured healthcare information. It does not provide clinical diagnosis, hospital-level medical triage, or personalized treatment plans. Always consult a qualified medical professional for health concerns.
+            </p>
+            <div class="ma-emergency-notice">
+              <i class="fas fa-ambulance"></i>
+              <span><strong>Medical Emergency Warning:</strong> If you or someone around you is experiencing severe chest pain, sudden numbness, difficulty breathing, or severe trauma, call local emergency services immediately.</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       ABOUT MEDASSIST SUMMARY SECTION
+       ====================================================================== -->
+  <section class="ma-section ma-section-alt">
+    <div class="ma-container">
+      <div class="ma-about-grid">
+        
+        <div class="ma-about-image-wrapper">
+          <img src="{{ url_for('static', filename='edu.webp') }}" alt="Healthcare Education" class="ma-about-image">
+        </div>
+
+        <div class="ma-about-content">
+          <span class="ma-eyebrow">ABOUT THE PLATFORM</span>
+          <h2>Empowering Health Awareness Through Data</h2>
+          <p class="ma-about-lead">
+            MedAssist was built to bridge the gap between complex medical datasets and everyday health inquiries, offering an accessible, trustworthy reference system.
+          </p>
+          
+          <div class="ma-about-stats">
+            <div class="ma-stat-item">
+              <div class="ma-stat-number">132</div>
+              <div class="ma-stat-label">Symptoms</div>
+            </div>
+            <div class="ma-stat-item">
+              <div class="ma-stat-number">41</div>
+              <div class="ma-stat-label">Conditions</div>
+            </div>
+            <div class="ma-stat-item">
+              <div class="ma-stat-number">100%</div>
+              <div class="ma-stat-label">Structured</div>
+            </div>
+          </div>
+
+          <a href="/about.html" class="ma-btn ma-btn-secondary">
+            Read More About Us <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       CONDITION DETAILS MODAL (Phase 7)
+       ====================================================================== -->
+  <div class="ma-modal-backdrop" id="conditionModalBackdrop" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="ma-modal-dialog">
+      <div class="ma-modal-header">
+        <h3 class="ma-modal-title" id="modalConditionTitle">Condition Details</h3>
+        <button type="button" class="ma-modal-close" id="modalCloseBtn" aria-label="Close modal">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      
+      <div class="ma-modal-body">
+        
+        <div class="ma-modal-section">
+          <div class="ma-modal-section-title">
+            <i class="fas fa-file-medical-alt"></i> Description
+          </div>
+          <p id="modalConditionDesc" style="color: var(--ma-text); line-height: 1.6;"></p>
+        </div>
+
+        <div class="ma-modal-section">
+          <div class="ma-modal-section-title">
+            <i class="fas fa-shield-virus"></i> Standard Precautions
+          </div>
+          <ul class="ma-checklist" id="modalPrecautionsList"></ul>
+        </div>
+
+        <div class="ma-modal-section">
+          <div class="ma-modal-section-title">
+            <i class="fas fa-pills"></i> Educational Medication Reference
+          </div>
+          <div class="ma-meds-grid" id="modalMedsGrid"></div>
+          <div style="font-size: 0.78rem; color: var(--ma-text-muted); margin-top: 8px;">
+            <i class="fas fa-info-circle"></i> Reference only. Consult a physician before medication use.
+          </div>
+        </div>
+
+        <div class="ma-modal-section">
+          <div class="ma-modal-section-title">
+            <i class="fas fa-apple-alt"></i> Dietary Guidance
+          </div>
+          <ul class="ma-checklist" id="modalDietList"></ul>
+        </div>
+
+        <div class="ma-modal-section">
+          <div class="ma-modal-section-title">
+            <i class="fas fa-heartbeat"></i> Lifestyle & Wellness
+          </div>
+          <ul class="ma-checklist" id="modalWorkoutList"></ul>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================================
+       FOOTER
+       ====================================================================== -->
+  <footer class="ma-footer">
+    <div class="ma-container">
+      <div class="ma-footer-grid">
+        
+        <div class="ma-footer-brand">
+          <a href="/" class="ma-brand" style="margin-bottom: 12px; display: inline-flex;">
+            <img class="ma-brand-logo" src="{{ url_for('static', filename='img.png') }}" alt="MedAssist Logo">
+            <span class="ma-brand-text" style="color: #FFFFFF;">Med<span style="color: var(--ma-blue);">Assist</span></span>
+          </a>
+          <p>
+            An intelligent symptom-exploration and healthcare knowledge platform designed to provide accessible medical information powered by machine learning.
+          </p>
+        </div>
+
+        <div class="ma-footer-col">
+          <h4>Navigation</h4>
+          <ul class="ma-footer-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="#symptom-checker">Symptom Checker</a></li>
+            <li><a href="#explore-conditions">Condition Directory</a></li>
+            <li><a href="#how-it-works">How It Works</a></li>
           </ul>
         </div>
-      </nav>
 
-
-
-
-
-
-<div class="slideshow-container">
-    <div class="text-overlay">Know your&nbsp;<span style="color: #55a5ea;">Meds!</span></div>
-    <div class="mySlides fade">
-        <img src="/static/pill1.jpg" style="width:100%"class="blurred-img">
-        
-    </div>
-    
-    <div class="mySlides fade">
-        <img src="/static/pill2.jpg" style="width:100%"class="blurred-img">
-    </div>
-    <div class="mySlides fade">
-        <img src="/static/pill3.jpg" style="width:100%"class="blurred-img">
-    </div>
-    <div class="mySlides fade">
-        <img src="/static/pill4.jpg" style="width:100%"class="blurred-img">
-    </div>
-    
-    
-</div>
-
-<script>
-    let slideIndex = 0;
-    showSlides();
-
-    function showSlides() {
-        let i;
-        let slides = document.getElementsByClassName("mySlides");
-        for (i = 0; i < slides.length; i++) {
-            slides[i].style.display = "none";
-        }
-        slideIndex++;
-        if (slideIndex > slides.length) {slideIndex = 1}
-        slides[slideIndex - 1].style.display = "block";
-        setTimeout(showSlides, 4000); 
-    }
-</script>
-
-<section class="idk">
-    <div class="header">Med<span style="color: #55a5ea;">Assist</span>
-    
-
-    </div>
-    <div class="hero-container">
-       
-        <div class="hero-text">
-            <p>
-                MedAssist is an intelligent health companion that provides personalized medicine recommendations and related health insights. By simply entering your symptoms, MedAssist helps you discover potential causes, suggests treatments, and offers useful tips to manage your condition effectively.
-                
-            </p>
-        </div>
-    </div>
-        <div class="form-container">
-            <form action="/predict" method="post">
-                <div class="form-group">
-                    <label for="symptoms" class="form-label">Enter your symptoms</label>
-                    <input type="text" id="symptoms" name="symptoms" placeholder="Type symptoms such as itching, sleeping, aching, etc" class="form-input">
-                    <button type="submit" class="submit-btn">Predict</button>
-                </div>
-    
-                {% if message %}
-                <p class="message">{{ message }}</p>
-                {% endif %}
-    
-                
-            </form>
+        <div class="ma-footer-col">
+          <h4>Resources</h4>
+          <ul class="ma-footer-links">
+            <li><a href="/about.html">About MedAssist</a></li>
+            <li><a href="/contact.html">Contact Us</a></li>
+            <li><a href="/diseases.html">All Conditions</a></li>
+            <li><a href="/signin.html">Account Sign-in</a></li>
+          </ul>
         </div>
 
-</section>
-  
-   
-
-
-
-
-
-
-
-
-
-
-{% if predicted_disease %}
-
-<!-- Results -->
-<h1 class="result-heading">Check Your Results Here</h1>
-
-<div class="modal-container">
-    <div class="result-container">
-        <!-- Buttons to toggle display -->
-        <button class="toggle-button" data-bs-toggle="modal" data-bs-target="#diseaseModal">Disease</button>
-        <button class="toggle-button" data-bs-toggle="modal" data-bs-target="#descriptionModal">Description</button>
-        <button class="toggle-button" data-bs-toggle="modal" data-bs-target="#precautionModal">Precaution</button>
-        <button class="toggle-button" data-bs-toggle="modal" data-bs-target="#medicationsModal">Medications</button>
-        <button class="toggle-button" data-bs-toggle="modal" data-bs-target="#workoutsModal">Workouts</button>
-        <button class="toggle-button" data-bs-toggle="modal" data-bs-target="#dietsModal">Diets</button>
-    </div>
-</div>
-
-
-{% endif %}
-
-<!-- Disease Modal -->
-    <div class="modal fade" id="diseaseModal" tabindex="-1" aria-labelledby="diseaseModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header" style="background-color: #59bcbf51; color:white;"> 
-                    <h5 class="modal-title" id="diseaseModalLabel">Predicted Disease</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body" > 
-                    <p>{{ predicted_disease }}</p>
-                </div>
-            </div>
+        <div class="ma-footer-col">
+          <h4>Legal & Safety</h4>
+          <p style="font-size: 0.85rem; color: #94A3B8; line-height: 1.6;">
+            MedAssist is not an emergency triage tool. In case of urgent medical necessity, contact medical emergency services immediately.
+          </p>
         </div>
-    </div>
 
-
-    <!-- Description Modal -->
-    <div class="modal fade" id="descriptionModal" tabindex="-1" aria-labelledby="descriptionModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header" style="background-color: #59bcbf51; color:white;">
-                    <h5 class="modal-title" id="descriptionModalLabel">Description</h5>
-                    <button type="button" class="btn-close" style="margin-left:450px; margin-top: 10px;"data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p>{{ dis_des }}</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-<!-- Precaution Modal -->
-    <div class="modal fade" id="precautionModal" tabindex="-1" aria-labelledby="precautionModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header" style="background-color: #59bcbf51; color:white;">
-                    <h5 class="modal-title" id="precautionModalLabel">Precaution</h5>
-                    <button type="button" class="btn-close" style="margin-left:450px; margin-top: 10px;"data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <ul>
-                        {% for i in my_precautions %}
-                            <li>{{ i }}</li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-
-
-    <!-- Medications Modal -->
-    <div class="modal fade" id="medicationsModal" tabindex="-1" aria-labelledby="medicationsModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header" style="background-color: #59bcbf51; color:white;">
-                    <h5 class="modal-title" id="medicationsModalLabel">Medications</h5>
-                    <button type="button" class="btn-close" style="margin-left:450px; margin-top: 10px;"data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <ul>
-                        {% for i in medications %}
-                            <li>{{ i }}</li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Workouts Modal -->
-    <div class="modal fade" id="workoutsModal" tabindex="-1" aria-labelledby="workoutsModalLabel" aria-hidden="true">
-        <div class="modal-dialog" >
-            <div class="modal-content">
-                <div class="modal-header" style="background-color: #59bcbf51; color:white;">
-                    <h5 class="modal-title" id="workoutsModalLabel">Workouts</h5>
-                    <button type="button" class="btn-close"style="margin-left:450px; margin-top: 10px;" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <ul>
-                        {% for i in workout %}
-                            <li>{{ i }}</li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Diets Modal -->
-    <div class="modal fade" id="dietsModal" tabindex="-1" aria-labelledby="dietsModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header" style="background-color: #59bcbf51; color:white;">
-                    <h5 class="modal-title" id="dietsModalLabel">Diets</h5>
-                    <button type="button" class="btn-close"style="margin-left:450px; margin-top: 10px;" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <ul>
-                        {% for i in my_diet %}
-                            <li>{{ i }}</li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-    <br><br><br>
-    <header class="about-header">
-        <h1>About <span class ="highlight2">Med<span class="highlight">Assist</span></h1>
-    </header>
-    
-    <section class="about-us-section">
-      <div class="content">
-        <div class="content-container">
-            <div class="text">
-                <h2>Who We Are</h2>
-                <p>
-                    At  <span class ="highlight3">Med</span><span class="highlight">Assist</span>, we believe in harnessing the power of technology to make healthcare accessible and personalized for everyone. 
-                    Our platform is designed to assist users in identifying potential illnesses, offering preventative measures, and suggesting simple dietary tips based on their symptoms.
-                </p>
-            </div>
-            <div class="image">
-                <img src="static/about.png" alt="Who We Are">
-            </div>
-        </div>
-    </div>
-    
-
-    <div class="features">
-      <h2>What We Offer</h2>
-      <div class="feature-container">
-          <div class="text">
-              <h3>Predictive Analysis</h3>
-              <p>Enter your symptoms, and MedAssist predicts possible diseases using an intelligent machine learning model.</p>
-          </div>
-          <div class="image">
-              <img src="static/pred.jpg" alt="Predictive Analysis">
-          </div>
       </div>
-      <div class="feature-container">
-          <div class="image">
-              <img src="static/preca.jpg" alt="Precautionary Measures">
-          </div>
-          <div class="text">
-              <h3>Precautionary Measures</h3>
-              <p>Receive actionable tips to prevent the escalation of your condition.</p>
-          </div>
-      </div>
-      <div class="feature-container">
-          <div class="text">
-              <h3>Diet Recommendations</h3>
-              <p>Gain insights into a simple, health-focused diet tailored to your needs.</p>
-          </div>
-          <div class="image">
-              <img src="static/diet.jpg" alt="Diet Recommendations">
-          </div>
-      </div>
-      <div class="feature-container">
-          <div class="image">
-              <img src="static/edu.webp" alt="Health Education">
-          </div>
-          <div class="text">
-              <h3>Health Education</h3>
-              <p>Understand the predicted disease with detailed descriptions and related health insights.</p>
-          </div>
-      </div>
-  </div>
-  
 
-  <div class="mission-container">
-    <div class="mission">
-        <div class="text">
-            <h2>Our Mission</h2>
-            <p>
-                Our mission is to empower individuals with knowledge about their health and provide personalized guidance for a better quality of life.
-                Whether it's understanding a disease, managing symptoms, or making healthier lifestyle choices, MedAssist is your trusted companion.
-            </p>
+      <div class="ma-footer-bottom">
+        <div>&copy; 2026 MedAssist Healthcare Systems. All rights reserved.</div>
+        <div style="display: flex; gap: 20px;">
+          <span>Educational Use Only</span>
+          <span>Privacy Conscious</span>
         </div>
-        <div class="image">
-            <img src="static/mission.jpg" alt="Our Mission">
-        </div>
+      </div>
     </div>
-</div>
+  </footer>
 
-    </section>
-    <section class="contact-us">
-        <div class="contact-header">
-            <h2>Contact Us</h2>
-            <p>We'd love to hear from you! Reach out to us with any questions, feedback, or inquiries.</p>
-        </div>
-    
-        <div class="contact-content">
-            <div class="contact-info">
-                <h3>Our Address</h3>
-                <i class="fas fa-map-marker-alt"></i>
-                <p>MedAssist Headquarters</p>
-                <p>VIT Bhopal University</p>
-                <p>Bhopal, India, 466116</p>
-                
-                <h3>Phone</h3>
-                <i class="fas fa-phone-alt"></i>
-                <p>+123 456 7890</p>
-                
-                <h3>Email</h3>
-                <i class="fas fa-envelope"></i>
-                <p>support@medassist.com</p>
-    
-                
-            </div>
-    
-            <div class="contact-form">
-                <h3>Get in Touch</h3>
-                <form id="contact-form" action="/submit-form" method="POST">
-                    <div class="form-group">
-                        <label for="name">Full Name</label>
-                        <input type="text" id="name" name="name" required placeholder="Enter your full name">
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email Address</label>
-                        <input type="email" id="email" name="email" required placeholder="Enter your email address">
-                    </div>
-                    <div class="form-group">
-                        <label for="message">Your Message</label>
-                        <textarea id="message" name="message" required placeholder="Write your message here..."></textarea>
-                    </div>
-                    
-                </form>
-            </div>
-        </div>
-    
-        <div class="map">
-            <h3>Find Us Here</h3>
-            <iframe src="https://www.google.com/maps/embed?pb=YOUR_GOOGLE_MAP_URL" width="100%" height="400" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
-        </div>
-    </section>
-    
-    <footer class="site-footer" style="background-color: #194548;">
-        <div class="footer-inner">
-            <div class="quick-links">
-                <h2>Quick Links</h2>
-                <ul>
-                    <li><a href="#">Home</a></li>
-                    <li><a href="./about.html">About Us</a></li>
-                    <li><a href="./diseases.html">Diseases</a></li>
-                    
-                </ul>
-            </div>
-            
-            <div class="legal-info">
-                <h2>Legal</h2>
-                <ul>
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Terms of Use</a></li>
-                    <li><a href="#">Accessibility</a></li>
-                </ul>
-            </div>
-    
-            <!--  Newsletter Section -->
-            <div class="newsletter">
-                <h2>Newsletter</h2>
-                <p>Subscribe to our newsletter for the latest updates and offers.</p>
-                <form id="newsletter-form">
-                    <input type="email" id="email" placeholder="Enter your email" name="email" required>
-                    
-                </form>
-                <p id="subscription-message" style="color: rgb(255, 255, 255); font-weight: bold; display: none;">Subscribed successfully!</p>
-            </div>
-        </div>
-        
-        
-        
-        <div class="copyright" style="background-color: #55a5ea;">
-            <ul>
-                <a href="#"><i class="fa-brands fa-facebook" style="padding: 10px;font-size: 23px;color: rgba(218, 223, 223, 0.725);"></i></a>
-                <a href="#"><i class="fa-brands fa-twitter" style="padding: 10px;font-size: 23px;color: rgba(218, 223, 223, 0.725);"></i></a>
-                <a href="#"><i class="fa-brands fa-linkedin" style="padding: 10px;font-size: 23px;color: rgba(218, 223, 223, 0.725);"></i></a>
-                <a href="#"><i class="fa-brands fa-instagram" style="padding: 10px;font-size: 23px;color: rgba(218, 223, 223, 0.725);"></i></a>
-            </ul>
-            <p>&copy; 2024 MedAssist. All rights reserved.</p>
-        </div>
-        
-    </footer>
-    <script>
-       document.getElementById("email").addEventListener("keydown", function(event) {
-    
-    if (event.key === "Enter") {
-        const email = document.getElementById("email").value;
+  <!-- ======================================================================
+       DATA & JAVASCRIPT CONTROLLERS
+       ====================================================================== -->
+  <!-- Safely pass server catalogs to client JS -->
+  <script>
+    window.MEDASSIST_SYMPTOMS = {{ symptoms_catalog|tojson }};
+    window.MEDASSIST_CONDITIONS = {{ conditions_catalog|tojson }};
+    window.HAS_RESULTS = {% if predicted_disease %}true{% else %}false{% endif %};
+  </script>
 
-        if (email) {
-           
-            document.getElementById("subscription-message").style.display = "block";
-            
-            document.getElementById("email").value = "";
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // -------------------------------------------------------------
+      // 1. Mobile Menu Toggle
+      // -------------------------------------------------------------
+      const navToggle = document.getElementById('navToggle');
+      const navLinks = document.getElementById('navLinks');
+      
+      if (navToggle && navLinks) {
+        navToggle.addEventListener('click', function() {
+          const isOpen = navLinks.classList.toggle('open');
+          navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+          navToggle.innerHTML = isOpen ? '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+        });
+
+        // Close on link click
+        navLinks.querySelectorAll('a').forEach(link => {
+          link.addEventListener('click', () => {
+            navLinks.classList.remove('open');
+            navToggle.setAttribute('aria-expanded', 'false');
+            navToggle.innerHTML = '<i class="fas fa-bars"></i>';
+          });
+        });
+      }
+
+      // -------------------------------------------------------------
+      // 2. Sticky Navbar Shadow
+      // -------------------------------------------------------------
+      const navbar = document.getElementById('mainNavbar');
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 20) {
+          navbar.classList.add('scrolled');
         } else {
-            
-            alert("Please enter a valid email address.");
+          navbar.classList.remove('scrolled');
         }
-    }
-});
+      });
 
+      // -------------------------------------------------------------
+      // 3. Interactive Symptom Search & Multi-Select Controller
+      // -------------------------------------------------------------
+      const searchInput = document.getElementById('symptomSearchInput');
+      const dropdown = document.getElementById('autocompleteDropdown');
+      const searchClearBtn = document.getElementById('searchClearBtn');
+      const chipsList = document.getElementById('chipsList');
+      const emptyPlaceholder = document.getElementById('emptyPlaceholder');
+      const canonicalInput = document.getElementById('canonicalSymptomsInput');
+      const countBadge = document.getElementById('selectedCountBadge');
+      const clearAllBtn = document.getElementById('clearAllBtn');
+      const predictionForm = document.getElementById('predictionForm');
+      const clientAlert = document.getElementById('clientAlert');
+      const clientAlertText = document.getElementById('clientAlertText');
+      const quickPills = document.querySelectorAll('.ma-quick-pill');
 
-    </script>
- 
+      // State: Set of selected canonical keys
+      const selectedKeys = new Set();
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+      // Symptom Lookup Map
+      const symptomMap = new Map();
+      (window.MEDASSIST_SYMPTOMS || []).forEach(item => {
+        symptomMap.set(item.id, item.label);
+      });
+
+      // Initialize from server canonical field if present
+      if (canonicalInput && canonicalInput.value) {
+        canonicalInput.value.split(',').forEach(key => {
+          const cleanKey = key.trim().toLowerCase();
+          if (cleanKey && symptomMap.has(cleanKey)) {
+            selectedKeys.add(cleanKey);
+          }
+        });
+        renderChips();
+      }
+
+      function updateCanonicalInput() {
+        const arr = Array.from(selectedKeys);
+        canonicalInput.value = arr.join(',');
+        countBadge.textContent = arr.length;
+        if (arr.length > 0) {
+          clearAllBtn.style.display = 'inline-block';
+          emptyPlaceholder.style.display = 'none';
+        } else {
+          clearAllBtn.style.display = 'none';
+          emptyPlaceholder.style.display = 'block';
+        }
+        updateQuickPills();
+      }
+
+      function renderChips() {
+        // Clear all chips except placeholder
+        const existingChips = chipsList.querySelectorAll('.ma-chip');
+        existingChips.forEach(c => c.remove());
+
+        selectedKeys.forEach(key => {
+          const label = symptomMap.get(key) || key;
+          const chip = document.createElement('div');
+          chip.className = 'ma-chip';
+          chip.innerHTML = `
+            <span>${escapeHtml(label)}</span>
+            <button type="button" class="ma-chip-remove" data-key="${escapeHtml(key)}" aria-label="Remove ${escapeHtml(label)}">
+              &times;
+            </button>
+          `;
+          chipsList.appendChild(chip);
+        });
+
+        updateCanonicalInput();
+      }
+
+      function addSymptom(key) {
+        if (!key || !symptomMap.has(key)) return;
+        selectedKeys.add(key);
+        renderChips();
+        hideAlert();
+        searchInput.value = '';
+        searchClearBtn.style.display = 'none';
+        dropdown.classList.remove('active');
+        searchInput.focus();
+      }
+
+      function removeSymptom(key) {
+        selectedKeys.delete(key);
+        renderChips();
+      }
+
+      function clearAllSymptoms() {
+        selectedKeys.clear();
+        renderChips();
+        searchInput.value = '';
+        searchClearBtn.style.display = 'none';
+        dropdown.classList.remove('active');
+      }
+
+      function updateQuickPills() {
+        quickPills.forEach(pill => {
+          const key = pill.getAttribute('data-key');
+          if (selectedKeys.has(key)) {
+            pill.classList.add('selected');
+          } else {
+            pill.classList.remove('selected');
+          }
+        });
+      }
+
+      // Delegate chip remove button clicks
+      chipsList.addEventListener('click', (e) => {
+        const removeBtn = e.target.closest('.ma-chip-remove');
+        if (removeBtn) {
+          const key = removeBtn.getAttribute('data-key');
+          removeSymptom(key);
+        }
+      });
+
+      // Clear all button click
+      if (clearAllBtn) {
+        clearAllBtn.addEventListener('click', clearAllSymptoms);
+      }
+
+      // Reset button click
+      const resetCheckerBtn = document.getElementById('resetCheckerBtn');
+      if (resetCheckerBtn) {
+        resetCheckerBtn.addEventListener('click', () => {
+          clearAllSymptoms();
+          hideAlert();
+        });
+      }
+
+      // Quick select pills click
+      quickPills.forEach(pill => {
+        pill.addEventListener('click', () => {
+          const key = pill.getAttribute('data-key');
+          if (selectedKeys.has(key)) {
+            removeSymptom(key);
+          } else {
+            addSymptom(key);
+          }
+        });
+      });
+
+      // Autocomplete search filtering
+      let highlightedIndex = -1;
+      let currentSuggestions = [];
+
+      function showSuggestions(query) {
+        const q = query.trim().toLowerCase();
+        if (!q) {
+          dropdown.classList.remove('active');
+          searchClearBtn.style.display = 'none';
+          return;
+        }
+
+        searchClearBtn.style.display = 'block';
+
+        // Filter: match either label or raw key, exclude already selected
+        currentSuggestions = (window.MEDASSIST_SYMPTOMS || []).filter(item => {
+          if (selectedKeys.has(item.id)) return false;
+          return item.label.toLowerCase().includes(q) || item.id.toLowerCase().includes(q);
+        }).slice(0, 10);
+
+        if (currentSuggestions.length === 0) {
+          dropdown.innerHTML = `
+            <div class="ma-suggestion-empty">
+              No matching symptoms found for "<strong>${escapeHtml(query)}</strong>"
+            </div>
+          `;
+        } else {
+          dropdown.innerHTML = currentSuggestions.map((item, idx) => {
+            const label = item.label;
+            const matchIndex = label.toLowerCase().indexOf(q);
+            let displayHtml = escapeHtml(label);
+            if (matchIndex !== -1) {
+              const before = escapeHtml(label.substring(0, matchIndex));
+              const match = escapeHtml(label.substring(matchIndex, matchIndex + q.length));
+              const after = escapeHtml(label.substring(matchIndex + q.length));
+              displayHtml = `${before}<span class="ma-match-text">${match}</span>${after}`;
+            }
+
+            return `
+              <div class="ma-suggestion-item" data-index="${idx}" data-key="${escapeHtml(item.id)}" role="option">
+                <span>${displayHtml}</span>
+                <i class="fas fa-plus ma-add-icon"></i>
+              </div>
+            `;
+          }).join('');
+        }
+
+        highlightedIndex = -1;
+        dropdown.classList.add('active');
+      }
+
+      searchInput.addEventListener('input', (e) => {
+        showSuggestions(e.target.value);
+      });
+
+      searchClearBtn.addEventListener('click', () => {
+        searchInput.value = '';
+        searchClearBtn.style.display = 'none';
+        dropdown.classList.remove('active');
+        searchInput.focus();
+      });
+
+      // Keyboard navigation in search input
+      searchInput.addEventListener('keydown', (e) => {
+        const items = dropdown.querySelectorAll('.ma-suggestion-item');
+        if (!dropdown.classList.contains('active') || items.length === 0) {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+          }
+          return;
+        }
+
+        if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          highlightedIndex = (highlightedIndex + 1) % items.length;
+          updateHighlight(items);
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          highlightedIndex = (highlightedIndex - 1 + items.length) % items.length;
+          updateHighlight(items);
+        } else if (e.key === 'Enter') {
+          e.preventDefault();
+          if (highlightedIndex >= 0 && highlightedIndex < items.length) {
+            const key = items[highlightedIndex].getAttribute('data-key');
+            addSymptom(key);
+          } else if (items.length > 0) {
+            const key = items[0].getAttribute('data-key');
+            addSymptom(key);
+          }
+        } else if (e.key === 'Escape') {
+          dropdown.classList.remove('active');
+        }
+      });
+
+      function updateHighlight(items) {
+        items.forEach((item, idx) => {
+          if (idx === highlightedIndex) {
+            item.classList.add('highlighted');
+            item.scrollIntoView({ block: 'nearest' });
+          } else {
+            item.classList.remove('highlighted');
+          }
+        });
+      }
+
+      dropdown.addEventListener('click', (e) => {
+        const item = e.target.closest('.ma-suggestion-item');
+        if (item) {
+          const key = item.getAttribute('data-key');
+          addSymptom(key);
+        }
+      });
+
+      // Close dropdown on click outside
+      document.addEventListener('click', (e) => {
+        if (!e.target.closest('.ma-search-wrapper')) {
+          dropdown.classList.remove('active');
+        }
+      });
+
+      // Form Submit Validation
+      predictionForm.addEventListener('submit', function(e) {
+        if (selectedKeys.size === 0) {
+          e.preventDefault();
+          showAlert('Please select at least one symptom before analyzing.');
+          searchInput.focus();
+          return;
+        }
+
+        // Disable submit button and show spinner to prevent repeated clicks
+        const submitBtn = document.getElementById('predictSubmitBtn');
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Analyzing Symptoms...';
+        }
+      });
+
+      function showAlert(msg) {
+        if (clientAlert && clientAlertText) {
+          clientAlertText.textContent = msg;
+          clientAlert.style.display = 'flex';
+        }
+      }
+
+      function hideAlert() {
+        if (clientAlert) {
+          clientAlert.style.display = 'none';
+        }
+      }
+
+      // Check another symptom button scrolls to checker
+      const checkAnotherBtn = document.getElementById('checkAnotherBtn');
+      if (checkAnotherBtn) {
+        checkAnotherBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const checkerElem = document.getElementById('symptom-checker');
+          if (checkerElem) {
+            checkerElem.scrollIntoView({ behavior: 'smooth' });
+            searchInput.focus();
+          }
+        });
+      }
+
+      // -------------------------------------------------------------
+      // 4. Condition Explorer Controller (Phase 7)
+      // -------------------------------------------------------------
+      const conditionSearchInput = document.getElementById('conditionSearchInput');
+      const conditionSearchClear = document.getElementById('conditionSearchClear');
+      const alphabetFilter = document.getElementById('alphabetFilter');
+      const conditionsGrid = document.getElementById('conditionsGrid');
+      const conditionCards = conditionsGrid.querySelectorAll('.ma-condition-card');
+      const countText = document.getElementById('conditionCountText');
+      const emptyState = document.getElementById('explorerEmptyState');
+      const resetFilterBtn = document.getElementById('resetConditionFilterBtn');
+
+      let currentLetter = 'ALL';
+      let currentQuery = '';
+
+      // Build unique alphabetical letter buttons dynamically
+      const uniqueLetters = new Set();
+      conditionCards.forEach(card => {
+        const l = card.getAttribute('data-letter');
+        if (l) uniqueLetters.add(l.toUpperCase());
+      });
+
+      const sortedLetters = Array.from(uniqueLetters).sort();
+      sortedLetters.forEach(letter => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'ma-letter-btn';
+        btn.textContent = letter;
+        btn.setAttribute('data-letter', letter);
+        alphabetFilter.appendChild(btn);
+      });
+
+      function filterConditions() {
+        let visibleCount = 0;
+        const q = currentQuery.trim().toLowerCase();
+
+        conditionCards.forEach(card => {
+          const name = card.getAttribute('data-name') || '';
+          const desc = card.getAttribute('data-desc') || '';
+          const letter = card.getAttribute('data-letter') || '';
+
+          const matchesLetter = (currentLetter === 'ALL' || letter.toUpperCase() === currentLetter);
+          const matchesQuery = (!q || name.includes(q) || desc.includes(q));
+
+          if (matchesLetter && matchesQuery) {
+            card.style.display = 'flex';
+            visibleCount++;
+          } else {
+            card.style.display = 'none';
+          }
+        });
+
+        countText.textContent = `Showing ${visibleCount} of ${conditionCards.length} conditions`;
+        emptyState.style.display = visibleCount === 0 ? 'block' : 'none';
+      }
+
+      alphabetFilter.addEventListener('click', (e) => {
+        const btn = e.target.closest('.ma-letter-btn');
+        if (!btn) return;
+        alphabetFilter.querySelectorAll('.ma-letter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentLetter = btn.getAttribute('data-letter') || 'ALL';
+        filterConditions();
+      });
+
+      conditionSearchInput.addEventListener('input', (e) => {
+        currentQuery = e.target.value;
+        conditionSearchClear.style.display = currentQuery.trim() ? 'block' : 'none';
+        filterConditions();
+      });
+
+      conditionSearchClear.addEventListener('click', () => {
+        conditionSearchInput.value = '';
+        currentQuery = '';
+        conditionSearchClear.style.display = 'none';
+        filterConditions();
+        conditionSearchInput.focus();
+      });
+
+      if (resetFilterBtn) {
+        resetFilterBtn.addEventListener('click', () => {
+          conditionSearchInput.value = '';
+          currentQuery = '';
+          conditionSearchClear.style.display = 'none';
+          currentLetter = 'ALL';
+          alphabetFilter.querySelectorAll('.ma-letter-btn').forEach(b => {
+            b.classList.toggle('active', b.getAttribute('data-letter') === 'ALL');
+          });
+          filterConditions();
+        });
+      }
+
+      // -------------------------------------------------------------
+      // 5. Condition Details Modal Controller (Phase 7)
+      // -------------------------------------------------------------
+      const modalBackdrop = document.getElementById('conditionModalBackdrop');
+      const modalCloseBtn = document.getElementById('modalCloseBtn');
+      const modalTitle = document.getElementById('modalConditionTitle');
+      const modalDesc = document.getElementById('modalConditionDesc');
+      const modalPrecautions = document.getElementById('modalPrecautionsList');
+      const modalMeds = document.getElementById('modalMedsGrid');
+      const modalDiet = document.getElementById('modalDietList');
+      const modalWorkout = document.getElementById('modalWorkoutList');
+
+      const conditionsMap = new Map();
+      (window.MEDASSIST_CONDITIONS || []).forEach(c => {
+        conditionsMap.set(String(c.id), c);
+      });
+
+      conditionsGrid.addEventListener('click', (e) => {
+        const btn = e.target.closest('.ma-condition-view-btn');
+        if (!btn) return;
+        const id = btn.getAttribute('data-condition-id');
+        const condition = conditionsMap.get(id);
+        if (!condition) return;
+
+        openConditionModal(condition);
+      });
+
+      function openConditionModal(c) {
+        modalTitle.textContent = c.name;
+        modalDesc.textContent = c.description || 'No clinical description available.';
+
+        // Precautions
+        if (c.precautions && c.precautions.length > 0) {
+          modalPrecautions.innerHTML = c.precautions.map(p => `
+            <li class="ma-checklist-item">
+              <i class="fas fa-check-circle"></i> <span>${escapeHtml(p)}</span>
+            </li>
+          `).join('');
+        } else {
+          modalPrecautions.innerHTML = '<li style="color: var(--ma-text-muted); font-style: italic;">No specific precautions listed.</li>';
+        }
+
+        // Medications
+        if (c.medications && c.medications.length > 0) {
+          modalMeds.innerHTML = c.medications.map(m => `
+            <div class="ma-med-item">
+              <i class="fas fa-prescription-bottle-alt"></i> <span>${escapeHtml(m)}</span>
+            </div>
+          `).join('');
+        } else {
+          modalMeds.innerHTML = '<p style="color: var(--ma-text-muted); font-style: italic;">No medication reference listed.</p>';
+        }
+
+        // Diet
+        if (c.diets && c.diets.length > 0) {
+          modalDiet.innerHTML = c.diets.map(d => `
+            <li class="ma-checklist-item">
+              <i class="fas fa-leaf" style="color: var(--ma-secondary);"></i> <span>${escapeHtml(d)}</span>
+            </li>
+          `).join('');
+        } else {
+          modalDiet.innerHTML = '<li style="color: var(--ma-text-muted); font-style: italic;">Standard hydration and balanced nutrition advised.</li>';
+        }
+
+        // Workout
+        if (c.workouts && c.workouts.length > 0) {
+          modalWorkout.innerHTML = c.workouts.map(w => `
+            <li class="ma-checklist-item">
+              <i class="fas fa-running" style="color: var(--ma-blue);"></i> <span>${escapeHtml(w)}</span>
+            </li>
+          `).join('');
+        } else {
+          modalWorkout.innerHTML = '<li style="color: var(--ma-text-muted); font-style: italic;">Adequate rest advised.</li>';
+        }
+
+        modalBackdrop.classList.add('active');
+        modalBackdrop.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeConditionModal() {
+        modalBackdrop.classList.remove('active');
+        modalBackdrop.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+      }
+
+      modalCloseBtn.addEventListener('click', closeConditionModal);
+
+      modalBackdrop.addEventListener('click', (e) => {
+        if (e.target === modalBackdrop) {
+          closeConditionModal();
+        }
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modalBackdrop.classList.contains('active')) {
+          closeConditionModal();
+        }
+      });
+
+      // Utility: Safe HTML Escaping
+      function escapeHtml(str) {
+        if (!str) return '';
+        const div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
+      }
+
+      // Auto-scroll to results if prediction is present
+      if (window.HAS_RESULTS) {
+        const resultsSection = document.getElementById('results');
+        if (resultsSection) {
+          resultsSection.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    });
+  </script>
 </body>
-
 </html>
